@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Comic Sans MS:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="tf.InteractiveSession() 与 tf.Session()1234567sess = tf.InteractiveSession()a = tf.constant(5.0)b = tf.constant(6.0)c = a * b# We can just use &apos;c.eval&apos; without passing &apos;sess&apos;print(c.eval())sess.close()">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tensorflow tips">
+<meta property="og:url" content="http://variant-star.github.io/2019/09/12/session/index.html">
+<meta property="og:site_name" content="variant-star的博客">
+<meta property="og:description" content="tf.InteractiveSession() 与 tf.Session()1234567sess = tf.InteractiveSession()a = tf.constant(5.0)b = tf.constant(6.0)c = a * b# We can just use &apos;c.eval&apos; without passing &apos;sess&apos;print(c.eval())sess.close()">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-11-15T02:13:14.006Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="tensorflow tips">
+<meta name="twitter:description" content="tf.InteractiveSession() 与 tf.Session()1234567sess = tf.InteractiveSession()a = tf.constant(5.0)b = tf.constant(6.0)c = a * b# We can just use &apos;c.eval&apos; without passing &apos;sess&apos;print(c.eval())sess.close()">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://variant-star.github.io/2019/09/12/session/">
+
+
+
+
+
+  <title>tensorflow tips | variant-star的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">variant-star的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">https://github.com/variant-star</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>
+            
+            日程表
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://variant-star.github.io/2019/09/12/session/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨 安">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="variant-star的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">tensorflow tips</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-12T16:27:02+08:00">
+                2019-09-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  887
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="tf-InteractiveSession-与-tf-Session"><a href="#tf-InteractiveSession-与-tf-Session" class="headerlink" title="tf.InteractiveSession() 与 tf.Session()"></a>tf.InteractiveSession() 与 tf.Session()</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sess = tf.InteractiveSession()</span><br><span class="line">a = tf.constant(<span class="number">5.0</span>)</span><br><span class="line">b = tf.constant(<span class="number">6.0</span>)</span><br><span class="line">c = a * b</span><br><span class="line"><span class="comment"># We can just use 'c.eval' without passing 'sess'</span></span><br><span class="line">print(c.eval())</span><br><span class="line">sess.close()</span><br></pre></td></tr></table></figure>
+<p>而tf.Session()前必须构建好图，再创建session<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Build a graph</span></span><br><span class="line">a = tf.constant(<span class="number">5.0</span>)</span><br><span class="line">b = tf.constant(<span class="number">6.0</span>)</span><br><span class="line">c = a * b</span><br><span class="line"><span class="comment"># Launch the graph in a Session</span></span><br><span class="line">sess = tf.Session()</span><br><span class="line"><span class="comment"># Evaluate the tensor 'c'</span></span><br><span class="line">print(sess.run(c))</span><br></pre></td></tr></table></figure></p>
+<h2 id="tf-app-flags-与-python3-absl-flags"><a href="#tf-app-flags-与-python3-absl-flags" class="headerlink" title="tf.app.flags 与 python3 absl.flags"></a>tf.app.flags 与 python3 absl.flags</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> absl <span class="keyword">import</span> app</span><br><span class="line"></span><br><span class="line">FLAGS = flags.FLAGS</span><br><span class="line">flags.DEFINE_string(<span class="string">'gpu'</span>, <span class="literal">None</span>, <span class="string">'comma separated list of GPU to use'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(argv)</span>:</span></span><br><span class="line">    print(FLAGS.gpu)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    app.run(main)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">flags = tf.app.flags</span><br><span class="line">FLAGS = flags.FLAGS</span><br><span class="line">flags.DEFINE_float(‘learning_rate’, <span class="number">0.01</span>, ‘Initial learning rate.’)</span><br><span class="line">flags.DEFINE_integer(‘max_steps’, <span class="number">2000</span>, ‘Number of steps to run trainer.’)</span><br><span class="line">flags.DEFINE_string(‘train_dir’, ‘data’, ‘Directory to put the training data.’)</span><br><span class="line">flags.DEFINE_boolean(‘fake_data’, <span class="literal">False</span>, ‘If true, uses fake data ‘</span><br><span class="line">‘<span class="keyword">for</span> unit testing.’)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    print(FLAGS.learning_rate)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    tf.app.run()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"></span><br><span class="line">parser = argparse.ArgumentParser(description=<span class="string">"Demo"</span>)</span><br><span class="line">parser.add_argument(<span class="string">'-y'</span>, <span class="string">'--year'</span>, default=<span class="string">'2019'</span>)</span><br><span class="line">parser.add_argument(<span class="string">'-m'</span>, <span class="string">'--month'</span>, default=<span class="string">'Sep'</span>)</span><br><span class="line">args = parser.parse_args()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    print(args)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<h2 id="tf-train-ExponentialMovingAverage"><a href="#tf-train-ExponentialMovingAverage" class="headerlink" title="tf.train.ExponentialMovingAverage"></a>tf.train.ExponentialMovingAverage</h2><p>Some training algorithms, such as GradientDescent and Momentum often benefit from maintaining a moving average of variables during optimization. Using the moving averages for evaluations often improve results significantly.</p>
+<pre><code>tf.train.ExponentialMovingAverage.__init__(self, decay, num_updates=None, zero_debias=False, name=&quot;ExponentialMovingAverage&quot;):
+</code></pre><p>参数的移动平均验证效果优于最终训练的结果。</p>
+<script type="math/tex; mode=display">shadow\_variable=decay*shadow\_variabe+(1-decay)*variable</script><script type="math/tex; mode=display">decay = min(decay, \frac{1+steps}{10+steps})</script><p>$shadow_variable$ 最初为参数的 $copy$ ，上次为指数衰减， $decay$ 为衰减速率，一般为 $0.9, 0.99$ 等接近 $1$ 的数。</p>
+<p>一般来讲，decay越大模型越稳定，因为参数更新更慢，趋于稳定。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义一个32位浮点数的变量，初始值位0.0</span></span><br><span class="line">v1 = tf.Variable(dtype=tf.float32, initial_value=<span class="number">0.</span>)</span><br><span class="line"><span class="comment"># 衰减率decay，初始值位0.99</span></span><br><span class="line">decay = <span class="number">0.99</span></span><br><span class="line"><span class="comment"># 定义num_updates，同样，初始值位0</span></span><br><span class="line">num_updates = tf.Variable(<span class="number">0</span>, trainable=<span class="literal">False</span>)</span><br><span class="line"><span class="comment"># 定义滑动平均模型的类，将衰减率decay和num_updates传入。</span></span><br><span class="line">ema = tf.train.ExponentialMovingAverage(decay=decay, num_updates=num_updates)</span><br><span class="line"><span class="comment"># 定义更新变量列表</span></span><br><span class="line">update_var_list = [v1]</span><br><span class="line"><span class="comment"># 使用滑动平均模型</span></span><br><span class="line">ema_apply = ema.apply(update_var_list) <span class="comment"># return an operation that updates the moving averages</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">   <span class="comment"># 初始化全局变量</span></span><br><span class="line">   sess.run(tf.global_variables_initializer())</span><br><span class="line"></span><br><span class="line">   print(sess.run([v1, ema.average(v1)]))</span><br><span class="line">   <span class="comment"># shadow_variable = variable = 0.</span></span><br><span class="line">   sess.run(tf.assign(v1, <span class="number">5</span>))</span><br><span class="line">   sess.run(ema_apply)</span><br><span class="line">   print(sess.run([v1, ema.average(v1)]))</span><br></pre></td></tr></table></figure>
+<p>可参考吴恩达 $deeeplearning.ai$ 指数加权平均。</p>
+<h2 id="tf-add-to-collection-与-tf-get-collection"><a href="#tf-add-to-collection-与-tf-get-collection" class="headerlink" title="tf.add_to_collection 与 tf.get_collection"></a>tf.add_to_collection 与 tf.get_collection</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf;  </span><br><span class="line"></span><br><span class="line">v1 = tf.get_variable(name=<span class="string">'v1'</span>, shape=[<span class="number">1</span>], initializer=tf.constant_initializer(<span class="number">0</span>))</span><br><span class="line">tf.add_to_collection(<span class="string">'loss'</span>, v1)</span><br><span class="line">v2 = tf.get_variable(name=<span class="string">'v2'</span>, shape=[<span class="number">1</span>], initializer=tf.constant_initializer(<span class="number">2</span>))</span><br><span class="line">tf.add_to_collection(<span class="string">'loss'</span>, v2)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">	sess.run(tf.initialize_all_variables())</span><br><span class="line"></span><br><span class="line">	<span class="keyword">print</span> tf.get_collection(<span class="string">'loss'</span>)</span><br><span class="line">	<span class="keyword">print</span> sess.run(tf.add_n(tf.get_collection(<span class="string">'loss'</span>)))</span><br></pre></td></tr></table></figure>
+<p>例如在使用L2正则化，网路各层变量需计算tf.nn.l2_loss，将其加入loss列表，最后创建操作求和。</p>
+<h2 id="tf-control-dependencies"><a href="#tf-control-dependencies" class="headerlink" title="tf.control_dependencies"></a>tf.control_dependencies</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> g.control_dependencies([a, b, c]):</span><br><span class="line"><span class="comment">#’d’和’e’只会在’a’,’b’和’c’运行之后运行</span></span><br><span class="line">  d = ...</span><br><span class="line">  e = ...</span><br></pre></td></tr></table></figure>
+<h2 id="tf-name-scope-与-tf-variable-scope"><a href="#tf-name-scope-与-tf-variable-scope" class="headerlink" title="tf.name_scope 与 tf.variable_scope"></a>tf.name_scope 与 tf.variable_scope</h2><p><a href="https://www.zhihu.com/question/54513728/answer/515912730" target="_blank" rel="noopener">知乎 tensorflow.name_scope如何理解</a></p>
+<blockquote>
+<p>总结<br>1.tf.variable_scope 与 tf.get_variable 必须搭配使（全局 scope 除外）<br>2.tf.Variable 可以单独使用，也可以搭配 tf.name_scope 使用，给变量分类命名，模块化<br>3.tf.Variable 与 tf.variable_scope 搭配使用不伦不类，不是设计者的初衷</p>
+</blockquote>
+<p>当前环境作用域可通过 tf.get_variable_scope 获取。</p>
+<h2 id="tensorflow-contrib-slim-API"><a href="#tensorflow-contrib-slim-API" class="headerlink" title="tensorflow.contrib.slim API"></a>tensorflow.contrib.slim API</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">input = ...</span><br><span class="line"><span class="keyword">with</span> tf.variable_scope(<span class="string">'conv1'</span>) <span class="keyword">as</span> scope:</span><br><span class="line">    kernel = tf.get_variable(name=<span class="string">'weight'</span>, shape=[<span class="number">3</span>, <span class="number">3</span>, <span class="number">64</span>, <span class="number">128</span>], initializer=tf.truncated_normal_initializer(stddev=<span class="number">5e-2</span>, dtype=tf.float32), dtype=tf.float32)</span><br><span class="line">    conv = tf.nn.conv2d(input, kernel, [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>], padding=<span class="string">'SAME'</span>)</span><br><span class="line">    biases = tf.get_variable(name=<span class="string">'biases'</span>, shape=[<span class="number">64</span>], initializer=tf.constant_initializer(<span class="number">0.0</span>), dtype=tf.float32)</span><br><span class="line">    conv1 = tf.nn.relu(tf.nn.bias_add(conv, biases), name=scope.name)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># slim convolution 原型</span></span><br><span class="line">convolution(inputs,</span><br><span class="line">        num_outputs,</span><br><span class="line">        kernel_size,</span><br><span class="line">        stride=<span class="number">1</span>,</span><br><span class="line">        padding=<span class="string">'SAME'</span>,</span><br><span class="line">        data_format =<span class="literal">None</span>,</span><br><span class="line">        rate = <span class="number">1</span>,</span><br><span class="line">        activation_fn = nn.relu,</span><br><span class="line">        normalizer_params=<span class="literal">None</span>,</span><br><span class="line">        weights_initializer = initializers.xavier_initializer(),</span><br><span class="line">        weights_regularizer = <span class="literal">None</span>,</span><br><span class="line">        biases_initializer = init_ops.zeros_initializer(),</span><br><span class="line">        biases_regularizer = <span class="literal">None</span>,</span><br><span class="line">        reuse = <span class="literal">None</span>,</span><br><span class="line">        variables_collections = <span class="literal">None</span>,</span><br><span class="line">        outputs_collections = <span class="literal">None</span>,</span><br><span class="line">        trainable = <span class="literal">True</span>,</span><br><span class="line">        scope = <span class="literal">None</span>):</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> tensorflow.contrib.slim <span class="keyword">as</span> slim</span><br><span class="line"></span><br><span class="line">input = ...</span><br><span class="line">net = slim.conv2d(input, <span class="number">128</span>, [<span class="number">3</span>, <span class="number">3</span>]. scope=<span class="string">'conv'</span>)</span><br></pre></td></tr></table></figure>
+<p>slim简化更有利于复杂网络编程，slim更多内容请参考官方说明</p>
+<p><a href="https://github.com/tensorflow/tensorflow/tree/master/tensorflow/contrib/slim" target="_blank" rel="noopener">Github tensorflow/contrib/slim说明</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    杨 安
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://variant-star.github.io/2019/09/12/session/" title="tensorflow tips">http://variant-star.github.io/2019/09/12/session/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/11/k_means/" rel="next" title="kmeans clustering">
+                <i class="fa fa-chevron-left"></i> kmeans clustering
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/09/13/ubuntutips/" rel="prev" title="ubuntu tips">
+                ubuntu tips <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="杨 安">
+            
+              <p class="site-author-name" itemprop="name">杨 安</p>
+              <p class="site-description motion-element" itemprop="description">正在开发中。。。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/variant-star" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zju3160104999@gmail.com" target="_blank" title="E-mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.baidu.com/" title="baidu" target="_blank">baidu</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#tf-InteractiveSession-与-tf-Session"><span class="nav-number">1.</span> <span class="nav-text">tf.InteractiveSession() 与 tf.Session()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tf-app-flags-与-python3-absl-flags"><span class="nav-number">2.</span> <span class="nav-text">tf.app.flags 与 python3 absl.flags</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tf-train-ExponentialMovingAverage"><span class="nav-number">3.</span> <span class="nav-text">tf.train.ExponentialMovingAverage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tf-add-to-collection-与-tf-get-collection"><span class="nav-number">4.</span> <span class="nav-text">tf.add_to_collection 与 tf.get_collection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tf-control-dependencies"><span class="nav-number">5.</span> <span class="nav-text">tf.control_dependencies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tf-name-scope-与-tf-variable-scope"><span class="nav-number">6.</span> <span class="nav-text">tf.name_scope 与 tf.variable_scope</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tensorflow-contrib-slim-API"><span class="nav-number">7.</span> <span class="nav-text">tensorflow.contrib.slim API</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">杨 安</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">5.4k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
