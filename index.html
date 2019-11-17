@@ -308,6 +308,160 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://variant-star.github.io/2019/11/17/xgbt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨 安">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="variant-star的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/11/17/xgbt/" itemprop="url">xgbt</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-17T11:10:06+08:00">
+                2019-11-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  232
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="GBDT梯度提升决策树"><a href="#GBDT梯度提升决策树" class="headerlink" title="GBDT梯度提升决策树"></a>GBDT梯度提升决策树</h1><h2 id="集成学习-Ensemble-Learning"><a href="#集成学习-Ensemble-Learning" class="headerlink" title="集成学习(Ensemble Learning)"></a>集成学习(Ensemble Learning)</h2><p>集成学习是指构建合并多个学习器完成学习任务，又分为同质集成和异质集成。顾名思义，同质集成是指包含不同种类型的个体学习器，而异质集成则指代包含非同种的个体学习器。同质集成中的个体学习器亦称基学习器，而异质集成中的个体学习器亦称组件学习器。</p>
+<p>我们所能听到的另一个词语，弱学习器，实际上是指我们上面提到的个体学习器。</p>
+<p>目前集成学习方法可大致分为两类，一类是指个体学习器存在强相互依赖关系，串行化序列生成，另一类指同时生成的并行化方法，这两类分别是我们常说的Boosting和Bagging。</p>
+<h2 id="GBDT"><a href="#GBDT" class="headerlink" title="GBDT"></a>GBDT</h2><h2 id="XGBoost"><a href="#XGBoost" class="headerlink" title="XGBoost"></a>XGBoost</h2><p><a href="https://zhuanlan.zhihu.com/p/59563071" target="_blank" rel="noopener">GBDT与XGBoost解析与应用</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://variant-star.github.io/2019/11/17/hierarchical/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -410,13 +564,13 @@
       
         
           
-            <h2 id="层次聚类-hierarchical-clustering"><a href="#层次聚类-hierarchical-clustering" class="headerlink" title="层次聚类(hierarchical clustering)"></a>层次聚类(hierarchical clustering)</h2><p><img src="https://pic4.zhimg.com/v2-6ec3a1e96ec112211c55d850fd4f13e3_b.webp" alt></p>
+            <h1 id="层次聚类-hierarchical-clustering"><a href="#层次聚类-hierarchical-clustering" class="headerlink" title="层次聚类(hierarchical clustering)"></a>层次聚类(hierarchical clustering)</h1><p><img src="https://pic4.zhimg.com/v2-6ec3a1e96ec112211c55d850fd4f13e3_b.webp" alt></p>
 <p>如图所示为层次聚类的基本算法流程：</p>
 <blockquote>
 <p>初始化每个样本独自一个聚类。选取相似度最高的聚类合并，重复操作直到最小聚类数或相似度小于某阈值。</p>
 </blockquote>
 <p>层次聚类类似于构建树的过程，因此在数据结构上可优先选取二叉树结构。</p>
-<h1 id="聚类相似度"><a href="#聚类相似度" class="headerlink" title="聚类相似度"></a>聚类相似度</h1><p>各种距离计算不再赘述，而基于距离描述的相似度有以下几种方式：</p>
+<h2 id="聚类相似度"><a href="#聚类相似度" class="headerlink" title="聚类相似度"></a>聚类相似度</h2><p>各种距离计算不再赘述，而基于距离描述的相似度有以下几种方式：</p>
 <ul>
 <li>Single Linkage<script type="math/tex; mode=display">dist_{ij} = min\{\ enum(dist(m, n))\ \}, m \in C_i, n \in C_j</script>即取两聚类最近邻样本聚类作为两聚类的距离，受极端值影响较大，可能两聚类因为偶然离得比较近的两个点而被合并，导致最终得到的大聚类中的点分布较为松散</li>
 <li>Complete Linkage<script type="math/tex; mode=display">dist_{ij} = max\{\ enum(dist(m, n))\ \}, m \in C_i, n \in C_j</script>即取两聚类相距最远样本作为两聚类距离，与single linkage完全相反</li>
@@ -1759,202 +1913,6 @@ g++ -v
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://variant-star.github.io/2019/09/11/socks5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="杨 安">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="variant-star的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/09/11/socks5/" itemprop="url">socks5代理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-11T09:20:34+08:00">
-                2019-09-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  431
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Shadowsocks-Qt5"><a href="#Shadowsocks-Qt5" class="headerlink" title="Shadowsocks-Qt5"></a>Shadowsocks-Qt5</h1><ul>
-<li><p>PPA源安装，仅支持ubuntu 14.0.4或更高版本</p>
-<pre><code>sudo add-apt-repository ppa:hzwhuang/ss-qt5
-sudo apt-get update
-sudo apt-get install shadowsocks-qt5
-</code></pre><p>遇到依赖问题（dependency problems）针对解决即可。</p>
-</li>
-<li><p>Githubub release下载安装</p>
-<p>上述apt-get不再更新，Github可下载最新版本。</p>
-<pre><code># 版本号可能不同
-wget https://github.com/shadowsocks/shadowsocks-qt5/releases/download/v3.0.1/Shadowsocks-Qt5-3.0.1-x86_64.AppImage
-chmod a+x Shadowsocks-Qt5-3.0.1-x86_64.AppImage
-./Shadowsocks-Qt5-3.0.0-x86_64.AppImage
-</code></pre><p>安装过程可能遇到次c/c++版本问题，升级gcc g++即可。</p>
-</li>
-</ul>
-<p>配置Shadowsocks可按照github wiki手册，文末附链接。</p>
-<h1 id="Proxychains"><a href="#Proxychains" class="headerlink" title="Proxychains"></a>Proxychains</h1><h2 id="Proxychains-1"><a href="#Proxychains-1" class="headerlink" title="Proxychains"></a>Proxychains</h2><blockquote>
-<p>a tool that forces any TCP connection made by any given application to follow through proxy like TOR or any other SOCKS4, SOCKS5 or HTTP(S) proxy. Supported auth-types: “user/pass” for SOCKS4/5, “basic” for HTTP.</p>
-</blockquote>
-<h2 id="安装配置"><a href="#安装配置" class="headerlink" title="安装配置"></a>安装配置</h2><pre><code>sudo apt-get install proxychains
-</code></pre><p>启动shadowsocks-Qt5并连接至服务器后，编辑/etc/proxychains.conf</p>
-<pre><code>sudo vim /etc/proxychains.conf
-</code></pre><p>在ProxyList里加入Shadowsocks代理设置：</p>
-<pre><code>#代理    本地ip   本地端口
-socks5 127.0.0.1 1080
-</code></pre><p>搜索预加载库位置</p>
-<pre><code>find /usr/ -name libproxychains.so.3 -print
-</code></pre><blockquote>
-<ul>
-<li>静态链接在编译的时候就把所有依赖的方法的调用地址都写死了</li>
-<li>动态链接就是程序的依赖在运行的时候才载入，依赖通常都是以so库提供，程序在运行时动态的找到so库并载入</li>
-</ul>
-<p>LD_PRELOAD环境变量允许你定义在程序运行前优先加载的动态链接库。</p>
-</blockquote>
-<p>编辑/usr/bin/proxychains</p>
-<pre><code>sudo vim /usr/bin/proxychains
-</code></pre><p>修改</p>
-<pre><code># export LD_PRELOAD = /your/real/path/to/libproxychains.so.3
-export LD_PRELOAD = /usr/lib/x86_64-linux-gnu/libproxychains.so.3
-</code></pre><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>proxychains只影响指定程序，例如</p>
-<pre><code>proxychains curl www.google.com
-</code></pre><h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://github.com/haad/proxychains" target="_blank" rel="noopener">Github haad/proxychains</a></p>
-<p><a href="https://www.cnblogs.com/guguobao/p/8878109.html" target="_blank" rel="noopener">ubuntu下终端代理方法</a></p>
-<p><a href="https://shadowsocks.org/en/download/clients.html" target="_blank" rel="noopener">Clients-Shadowsocks</a></p>
-<p><a href="https://github.com/shadowsocks/shadowsocks-qt5/wiki/%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C" target="_blank" rel="noopener">Shadowsocks-Qt5使用手册</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2007,7 +1965,7 @@ export LD_PRELOAD = /usr/lib/x86_64-linux-gnu/libproxychains.so.3
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2092,7 +2050,7 @@ export LD_PRELOAD = /usr/lib/x86_64-linux-gnu/libproxychains.so.3
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">5.8k</span>
+    <span title="Site words total count">6k</span>
   
 </div>
 

@@ -123,7 +123,7 @@
 <meta property="og:description" content="层次聚类(hierarchical clustering) 如图所示为层次聚类的基本算法流程：  初始化每个样本独自一个聚类。选取相似度最高的聚类合并，重复操作直到最小聚类数或相似度小于某阈值。  层次聚类类似于构建树的过程，因此在数据结构上可优先选取二叉树结构。 聚类相似度各种距离计算不再赘述，而基于距离描述的相似度有以下几种方式：  Single Linkagedist_{ij} = min\">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://pic4.zhimg.com/v2-6ec3a1e96ec112211c55d850fd4f13e3_b.webp">
-<meta property="og:updated_time" content="2019-11-17T02:55:49.275Z">
+<meta property="og:updated_time" content="2019-11-17T03:11:32.614Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hierarchical">
 <meta name="twitter:description" content="层次聚类(hierarchical clustering) 如图所示为层次聚类的基本算法流程：  初始化每个样本独自一个聚类。选取相似度最高的聚类合并，重复操作直到最小聚类数或相似度小于某阈值。  层次聚类类似于构建树的过程，因此在数据结构上可优先选取二叉树结构。 聚类相似度各种距离计算不再赘述，而基于距离描述的相似度有以下几种方式：  Single Linkagedist_{ij} = min\">
@@ -408,13 +408,13 @@
       
 
       
-        <h2 id="层次聚类-hierarchical-clustering"><a href="#层次聚类-hierarchical-clustering" class="headerlink" title="层次聚类(hierarchical clustering)"></a>层次聚类(hierarchical clustering)</h2><p><img src="https://pic4.zhimg.com/v2-6ec3a1e96ec112211c55d850fd4f13e3_b.webp" alt></p>
+        <h1 id="层次聚类-hierarchical-clustering"><a href="#层次聚类-hierarchical-clustering" class="headerlink" title="层次聚类(hierarchical clustering)"></a>层次聚类(hierarchical clustering)</h1><p><img src="https://pic4.zhimg.com/v2-6ec3a1e96ec112211c55d850fd4f13e3_b.webp" alt></p>
 <p>如图所示为层次聚类的基本算法流程：</p>
 <blockquote>
 <p>初始化每个样本独自一个聚类。选取相似度最高的聚类合并，重复操作直到最小聚类数或相似度小于某阈值。</p>
 </blockquote>
 <p>层次聚类类似于构建树的过程，因此在数据结构上可优先选取二叉树结构。</p>
-<h1 id="聚类相似度"><a href="#聚类相似度" class="headerlink" title="聚类相似度"></a>聚类相似度</h1><p>各种距离计算不再赘述，而基于距离描述的相似度有以下几种方式：</p>
+<h2 id="聚类相似度"><a href="#聚类相似度" class="headerlink" title="聚类相似度"></a>聚类相似度</h2><p>各种距离计算不再赘述，而基于距离描述的相似度有以下几种方式：</p>
 <ul>
 <li>Single Linkage<script type="math/tex; mode=display">dist_{ij} = min\{\ enum(dist(m, n))\ \}, m \in C_i, n \in C_j</script>即取两聚类最近邻样本聚类作为两聚类的距离，受极端值影响较大，可能两聚类因为偶然离得比较近的两个点而被合并，导致最终得到的大聚类中的点分布较为松散</li>
 <li>Complete Linkage<script type="math/tex; mode=display">dist_{ij} = max\{\ enum(dist(m, n))\ \}, m \in C_i, n \in C_j</script>即取两聚类相距最远样本作为两聚类距离，与single linkage完全相反</li>
@@ -472,6 +472,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/17/xgbt/" rel="prev" title="xgbt">
+                xgbt <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -550,7 +554,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -617,7 +621,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#层次聚类-hierarchical-clustering"><span class="nav-number">1.</span> <span class="nav-text">层次聚类(hierarchical clustering)</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#聚类相似度"><span class="nav-number"></span> <span class="nav-text">聚类相似度</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#代码实现"><span class="nav-number">1.</span> <span class="nav-text">代码实现</span></a></li></ol></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#层次聚类-hierarchical-clustering"><span class="nav-number">1.</span> <span class="nav-text">层次聚类(hierarchical clustering)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#聚类相似度"><span class="nav-number">1.1.</span> <span class="nav-text">聚类相似度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码实现"><span class="nav-number">1.2.</span> <span class="nav-text">代码实现</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -651,7 +655,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">5.8k</span>
+    <span title="Site words total count">6k</span>
   
 </div>
 
