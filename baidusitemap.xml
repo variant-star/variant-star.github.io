@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://variant-star.github.io/2019/09/09/start/</loc>
+    <lastmod>2019-11-21</lastmod>
+  </url>  <url>
     <loc>http://variant-star.github.io/2019/11/21/modelselect/</loc>
     <lastmod>2019-11-21</lastmod>
   </url>  <url>
@@ -17,9 +20,6 @@
     <lastmod>2019-11-17</lastmod>
   </url>  <url>
     <loc>http://variant-star.github.io/2019/11/15/hello-world/</loc>
-    <lastmod>2019-11-15</lastmod>
-  </url>  <url>
-    <loc>http://variant-star.github.io/2019/09/09/start/</loc>
     <lastmod>2019-11-15</lastmod>
   </url>  <url>
     <loc>http://variant-star.github.io/2019/09/10/embedding/</loc>

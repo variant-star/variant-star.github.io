@@ -1103,7 +1103,7 @@ export LD_PRELOAD = /usr/lib/x86_64-linux-gnu/libproxychains.so.3
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  355
+                  534
                 </span>
               
 
@@ -1119,7 +1119,7 @@ export LD_PRELOAD = /usr/lib/x86_64-linux-gnu/libproxychains.so.3
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -1165,6 +1165,19 @@ export LD_PRELOAD = /usr/lib/x86_64-linux-gnu/libproxychains.so.3
 </blockquote>
 </li>
 </ul>
+<h3 id="模型评估方法："><a href="#模型评估方法：" class="headerlink" title="模型评估方法："></a>模型评估方法：</h3><ul>
+<li><p>留出法（hold-out）：sampling、 stratified sampling分层采样</p>
+</li>
+<li><p>cross validation：Leave-One-Out留一法LOO</p>
+</li>
+<li><p>bootstrapping：<br>对于m个样本，重复m次放回采样，其中某个样本不被采到的概率为</p>
+</li>
+</ul>
+<script type="math/tex; mode=display">\lim\limits_{m\to\infty}(1-\frac{1}{m})^m = \frac{1}{e} \approx 0.368</script><p>袋外估计 out-of-bag estimate</p>
+<p>BEP（Break-Even Point）平衡点 $P==R$</p>
+<p>F1度量</p>
+<script type="math/tex; mode=display">\frac{1}{F1}=\frac{1}{2}(\frac{1}{P}+\frac{1}{R})</script><script type="math/tex; mode=display">F1 = \frac{2 \times P \times R}{P + R} = \frac{2 \times P}{m + TP -TN}</script><p>其一般形式</p>
+<script type="math/tex; mode=display">\frac{1}{F_{\beta}}=\frac{1}{1+\beta^2}(\frac{1}{P}+\frac{\beta^2}{R})</script><script type="math/tex; mode=display">F_{\beta} = \frac{(1+\beta^2)\times P \times R}{(\beta^2 \times P) + R}</script><p>当 $\beta &gt; 1$ 时，召回率影响更大，当 $\beta &lt; 1$ 时，精确率影响更大。</p>
 <h4 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h4><p><a href="https://developers.google.com/machine-learning/crash-course" target="_blank" rel="noopener">Google机器学习速成课程</a></p>
 
           
@@ -1338,7 +1351,7 @@ export LD_PRELOAD = /usr/lib/x86_64-linux-gnu/libproxychains.so.3
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">6.1k</span>
+    <span title="Site words total count">6.2k</span>
   
 </div>
 
