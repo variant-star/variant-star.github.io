@@ -308,6 +308,346 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://variant-star.github.io/2019/09/11/k_means/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨 安">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="variant-star的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/11/k_means/" itemprop="url">kmeans clustering</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-11T13:01:49+08:00">
+                2019-09-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  732
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="k-均值聚类（k-means-clustering）"><a href="#k-均值聚类（k-means-clustering）" class="headerlink" title="k-均值聚类（k-means clustering）"></a>k-均值聚类（k-means clustering）</h1><p>聚类试图将数据集中的样本划分为若干个通常是不相交的子集。</p>
+<p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1568188417844&amp;di=7af82147b76a2dbf32653dfc58680887&amp;imgtype=0&amp;src=http%3A%2F%2Fpic4.zhimg.com%2Fv2-5362e21035b09bdbde0708161d6ff234_b.jpg" alt></p>
+<h2 id="距离计算-dist-cdot-cdot"><a href="#距离计算-dist-cdot-cdot" class="headerlink" title="距离计算 $dist(\cdot,\cdot)$"></a>距离计算 $dist(\cdot,\cdot)$</h2><p>对函数 $dist(\cdot,\cdot)$，若它是一个距离度量，则需满足：</p>
+<blockquote>
+<p>非负性： $dist(x<em>{i},x</em>{j}) \geq 0$<br>同一性： $dist(x<em>{i},x</em>{j}) = 0$ 当且仅当 $x<em>{i} = x</em>{j}$<br>对称性： $dist(x<em>{i},x</em>{j}) = dist(x<em>{j},x</em>{i})$<br>直递性： $dist(x<em>{i},x</em>{j}) \leq dist(x<em>{i},x</em>{k}) + dist(x<em>{k},x</em>{j})$</p>
+</blockquote>
+<p>给定样本 $x<em>{i} = (x</em>{i1},x<em>{i2},…,x</em>{in})$ 与 $x<em>{j} = (x</em>{j1},x<em>{j2},…,x</em>{jn})$ ，最常用的是<strong>“闵可夫斯基距离”（Minkowshki distance）</strong></p>
+<script type="math/tex; mode=display">dist_{mk}(x_{i},x_{j}) = (\sum_{u=1}^{n}|x_{iu}-x_{ju}|^{p})^{\frac{1}{p}}</script><p>当 $p=2$ 即欧式距离（Euclidean distance）。</p>
+<p>当 $p=1$ 即曼哈顿距离（Manhattan distance）。</p>
+<p>上式仅适用于有序属性（ordinal attribute），针对属性定义域{飞机，轮船，火车}等则属于无序属性（non-ordinal attribute）。</p>
+<p>对于无序属性可采用VDM（Value Difference Metric），令 $m<em>{u,a}$ 表示在属性 $u$ 上取值为 $a$ 的样本数， $m</em>{u,a,i}$ 表示在第 $i$ 个样本簇中在属性 $u$ 上的取值为 $a$ 的样本数， $k$ 为样本簇数，则属性 $u$ 上两个离散值 $a$ 与 $b$ 之间的VDM距离为</p>
+<script type="math/tex; mode=display">VDM_{p}(a,b)=\sum_{i=1}^{k}|\frac{m_{u,a,i}}{m_{u,a}}-\frac{m_{u,b,i}}{m_{u,b}}|^{p}</script><p>假设混合属性有 $n<em>{c}$ 个有序属性、 $n-n</em>{c}$ 个无序属性，则</p>
+<script type="math/tex; mode=display">MinkovDM_{P}(x_{i},x_{j})=(\sum_{u=1}^{n_{c}}|x_{iu}-x_{ju}|^{p}+\sum_{u=n_{c}+1}^{n}VDM_{p}(x_{iu},x_{ju}))^{\frac{1}{p}}</script><p>当样本中属性重要性不同时，可使用“加权距离”（weighted distance）。</p>
+<script type="math/tex; mode=display">dist_{wmk}(x_{i},x_{j})=(w_{1} \cdot |x_{i1}-x_{j1}|^{p} + ... + w_{n} \cdot |x_{in}-x_{jn}|^{p})^\frac{1}{p}</script><p>通常 $\sum<em>{i=1}^{n}w</em>{i}=1$ 。</p>
+<h2 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a>算法流程</h2><p>给定样本集 $D = {x<em>{1},x</em>{2},…,x<em>{m}}$ ，k均值聚类算法针对聚类所得簇划分 $C = {C</em>{1},C<em>{2},…,C</em>{k}}$ 最小化平方误差</p>
+<script type="math/tex; mode=display">min\ E = \sum_{i=1}^{k}\sum_{x \in C_{i}}\|x-\mu_{i}\|_{2}^{2}</script><p>其中</p>
+<script type="math/tex; mode=display">\mu_{i}=\frac{1}{|C_{i}|}\sum_{x \in C_{i}}x</script><p>直接求解该式为NP hard问题，因此采用启发式迭代。</p>
+<h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><ul>
+<li>不能保证定位到聚类中心的最佳方案，但能保证收敛到某个具体方案，即局部最优点</li>
+<li>算法无法指出类别数，在同一数据集中，选择不同类别得到的结果不同，甚至不合理</li>
+</ul>
+<h2 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h2><ul>
+<li>多次聚类，初始化聚类中心不同，选择方差最小的结果</li>
+<li>将类别设置为1,逐步提高类别数，一般情况下，总方差快速下降直到达到某个拐点，这意味着再加一个新的聚类中心也不会显著减少总体方差。</li>
+</ul>
+<h2 id="TODO…"><a href="#TODO…" class="headerlink" title="TODO…"></a>TODO…</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python实现</span><br></pre></td></tr></table></figure>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>机器学习西瓜书</p>
+<p><a href="https://blog.csdn.net/qiao_lili/article/details/83384476" target="_blank" rel="noopener">k均值聚类的理解和实现</a></p>
+<p><a href="https://www.cnblogs.com/ws0751/p/8289738.html" target="_blank" rel="noopener">K-Means聚类算法</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://variant-star.github.io/2019/09/11/gccupdate/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨 安">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="variant-star的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/11/gccupdate/" itemprop="url">多版本gcc/g++切换</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-11T12:39:01+08:00">
+                2019-09-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  207
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="查看已安装版本"><a href="#查看已安装版本" class="headerlink" title="查看已安装版本"></a>查看已安装版本</h2><pre><code>ll /usr/bin/gcc*
+</code></pre><h2 id="安装所需gcc-g"><a href="#安装所需gcc-g" class="headerlink" title="安装所需gcc/g++"></a>安装所需gcc/g++</h2><p>这里以gcc-4.8为例</p>
+<pre><code>sudo apt install gcc-4.8 gcc-4.8-multilib g++-4.8 g++-4.8 g++-4.8-multilib
+</code></pre><h2 id="使用update-alternatives设置gcc-g"><a href="#使用update-alternatives设置gcc-g" class="headerlink" title="使用update-alternatives设置gcc/g++"></a>使用update-alternatives设置gcc/g++</h2><pre><code>sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 40 --slave /usr/bin/g++ g++ /usr/bin/g++-4.8
+# 数字 40 代表优先级数值，可以自己设定
+# --slave保证gcc/g++版本同步
+</code></pre><h2 id="使用update-alternatives配置gcc-g-版本"><a href="#使用update-alternatives配置gcc-g-版本" class="headerlink" title="使用update-alternatives配置gcc/g++版本"></a>使用update-alternatives配置gcc/g++版本</h2><pre><code>sudo update-alternatives --config gcc
+</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># example here</span></span><br><span class="line">variant@variant-TN15S:~$ sudo update-alternatives --config gcc</span><br><span class="line">There are 3 choices <span class="keyword">for</span> the alternative gcc (providing /usr/bin/gcc).</span><br><span class="line"></span><br><span class="line">  Selection    Path            Priority   Status</span><br><span class="line">------------------------------------------------------------</span><br><span class="line">  0            /usr/bin/gcc-5   100       auto mode</span><br><span class="line">* 1            /usr/bin/gcc-5   100       manual mode</span><br><span class="line">  2            /usr/bin/gcc-6   100       manual mode</span><br><span class="line">  3            /usr/bin/gcc-7   100       manual mode</span><br><span class="line"></span><br><span class="line">Press &lt;enter&gt; to keep the current choice[*], or <span class="built_in">type</span> selection number: 1</span><br></pre></td></tr></table></figure>
+<h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><pre><code>gcc -v
+g++ -v
+</code></pre><h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://www.jianshu.com/p/f66eed3a3a25" target="_blank" rel="noopener">linux下gcc、g++不同版本的安装和切换</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://variant-star.github.io/2019/09/11/socks5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -913,7 +1253,7 @@ export LD_PRELOAD = /usr/lib/x86_64-linux-gnu/libproxychains.so.3
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -998,7 +1338,7 @@ export LD_PRELOAD = /usr/lib/x86_64-linux-gnu/libproxychains.so.3
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">6k</span>
+    <span title="Site words total count">6.1k</span>
   
 </div>
 
