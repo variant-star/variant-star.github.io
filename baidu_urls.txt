@@ -1,5 +1,5 @@
-http://variant-star.github.io/2019/11/21/paper/ensembeltips/
-http://variant-star.github.io/2019/11/17/xgbt/
-http://variant-star.github.io/2019/11/17/hierarchical/
-http://variant-star.github.io/2019/11/15/hello-world/
-http://variant-star.github.io/2019/11/14/fcmeans/
+http://variant-star.github.io/2019/11/21/paper/paper1/
+http://variant-star.github.io/2019/11/17/algorithm/xgbt/
+http://variant-star.github.io/2019/11/17/algorithm/hierarchical/
+http://variant-star.github.io/2019/11/14/algorithm/fcmeans/
+http://variant-star.github.io/2019/09/23/etc/blog1/
